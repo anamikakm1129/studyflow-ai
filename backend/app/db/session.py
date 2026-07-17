@@ -1,0 +1,29 @@
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker, DeclarativeBase
+
+from app.core.config import settings
+
+# check_same_thread is only needed for SQLite; harmless to include always
+# guarded here since other DBs (Postgres, MySQL) don't accept that argument.
+connect_args = {"check_same_thread": False} if settings.database_url.startswith("sqlite") else {}
+
+engine = create_engine(settings.database_url, connect_args=connect_args)
+
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+
+class Base(DeclarativeBase):
+    """Base class all SQLAlchemy models inherit from."""
+    pass
+
+
+def get_db():
+    """
+    FastAPI dependency that yields a DB session per-request
+    and guarantees it's closed afterward.
+    """
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()

@@ -1,0 +1,42 @@
+services:
+  backend:
+    build:
+      context: ./backend
+    env_file:
+      # Copy backend/.env.example to backend/.env first (see README below).
+      # This supplies GEMINI_API_KEY, SECRET_KEY, model settings, etc.
+      - ./backend/.env
+    environment:
+      # Overrides specific to running under Docker Compose, regardless of
+      # what's in backend/.env:
+      # - DATABASE_URL points inside the mounted volume so the SQLite file
+      #   survives container restarts/rebuilds.
+      # - FRONTEND_ORIGIN must match wherever the frontend container is
+      #   actually reachable from the browser, for CORS to allow it.
+      DATABASE_URL: sqlite:////app/data/ai_tutor.db
+      FRONTEND_ORIGIN: http://localhost:${FRONTEND_PORT:-8080}
+    volumes:
+      - backend_data:/app/data
+    ports:
+      - "${BACKEND_PORT:-8000}:8000"
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        # Baked into the JS bundle at build time (see frontend/Dockerfile).
+        # Uses localhost + the host-mapped backend port, since this URL is
+        # called from the USER'S BROWSER, not from inside the Docker network.
+        VITE_API_BASE_URL: http://localhost:${BACKEND_PORT:-8000}/api
+    ports:
+      - "${FRONTEND_PORT:-8080}:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  # Persists the SQLite database across `docker compose down` / rebuilds.
+  # Removed only by `docker compose down -v`.
+  backend_data:

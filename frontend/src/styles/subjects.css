@@ -1,0 +1,31 @@
+.subjects-add-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.subjects-add-row input {
+  flex: 1;
+  padding: 10px 12px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-size: 14.5px;
+}
+
+.subject-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.subject-color-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+  flex-shrink: 0;
+}
+.subject-card-name {
+  flex: 1;
+  font-weight: 600;
+  font-size: 14.5px;
+}
