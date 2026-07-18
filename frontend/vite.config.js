@@ -11,7 +11,7 @@ export default defineConfig({
     // so the frontend never needs to hardcode a backend origin.
     proxy: {
       '/api': {
-        target: 'http://localhost:8000',
+        target: 'http://54.147.6.119:8000',
         changeOrigin: true
       }
     }

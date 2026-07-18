@@ -5,7 +5,7 @@ WORKDIR /app
 # Baked in at BUILD time: Vite inlines VITE_* vars into the JS bundle when
 # `npm run build` runs, so this must be an ARG/ENV here, not a runtime
 # environment variable on the container (that would be too late).
-ARG VITE_API_BASE_URL=http://localhost:8000/api
+ARG VITE_API_BASE_URL=http://54.147.6.119:8000/api
 ENV VITE_API_BASE_URL=$VITE_API_BASE_URL
 
 COPY package*.json ./
