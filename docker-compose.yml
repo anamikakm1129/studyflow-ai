@@ -14,7 +14,7 @@ services:
       # - FRONTEND_ORIGIN must match wherever the frontend container is
       #   actually reachable from the browser, for CORS to allow it.
       DATABASE_URL: sqlite:////app/data/ai_tutor.db
-      FRONTEND_ORIGIN: http://localhost:${FRONTEND_PORT:-8080}
+      FRONTEND_ORIGIN: http://54.147.6.119:8080
     volumes:
       - backend_data:/app/data
     ports:
@@ -28,7 +28,7 @@ services:
         # Baked into the JS bundle at build time (see frontend/Dockerfile).
         # Uses localhost + the host-mapped backend port, since this URL is
         # called from the USER'S BROWSER, not from inside the Docker network.
-        VITE_API_BASE_URL: http://localhost:${BACKEND_PORT:-8000}/api
+       VITE_API_BASE_URL: http://54.147.6.119:8000/api
     ports:
       - "${FRONTEND_PORT:-8080}:80"
     depends_on:
