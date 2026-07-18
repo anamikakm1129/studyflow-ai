@@ -20,11 +20,15 @@ app = FastAPI(title=settings.app_name, debug=settings.debug, lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[settings.frontend_origin],
+    allow_origins=[
+        "http://localhost:5173",
+        "https://studyflow-ai-1-lbze.onrender.com",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 # All routes are mounted under /api to match the frontend's Vite proxy
 # and the VITE_API_BASE_URL convention.
