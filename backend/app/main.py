@@ -22,12 +22,13 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:5173",
-        "https://studyflow-ai-1-lbze.onrender.com",
+        "https://studyflow-ai-1-1bze.onrender.com",
     ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 
 # All routes are mounted under /api to match the frontend's Vite proxy
