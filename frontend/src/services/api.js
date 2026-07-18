@@ -4,6 +4,8 @@ import axios from 'axios'
 // In production, VITE_API_BASE_URL should point to the deployed backend
 // (e.g. an AWS App Runner service URL).
 const baseURL = import.meta.env.VITE_API_BASE_URL || '/api'
+console.log("VITE_API_BASE_URL =", import.meta.env.VITE_API_BASE_URL)
+console.log("baseURL =", baseURL)
 
 export const apiClient = axios.create({
   baseURL,
